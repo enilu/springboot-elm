@@ -7,10 +7,7 @@ import cn.enilu.elm.api.vo.Rets;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -30,23 +27,52 @@ public class PositionController extends BaseController {
 
     @RequestMapping(value = "/v1/cities",method = RequestMethod.GET)
     @ResponseBody
-    public Object getCityInfo(@RequestParam("type") String type, HttpServletRequest request) {
-        CityInfo cityInfo = positionService.getPostion(getIp(request));
-        String city = cityInfo.getCity();
-        if (Strings.isNullOrEmpty(city)) {
-            return Rets.failure();
-        }
-        return positionService.findByName(city);
+    public Object cities(@RequestParam("type") String type, HttpServletRequest request) {
+        Map cities = baseDao.findOne("cities");
+        Map data = (Map) cities.get("data");
+        switch (type){
+            case "guess":
+                CityInfo cityInfo = positionService.getPostion(getIp(request));
+                String city = cityInfo.getCity();
+                if (Strings.isNullOrEmpty(city)) {
+                    return Rets.failure();
+                }
+                return positionService.findByName(city);
 
+            case "hot":
+
+                return data.get("hotCities");
+
+            case "group":
+                return data;
+
+
+            default:
+                    break;
+
+
+        }
+        return Rets.failure();
+
+    }
+    @RequestMapping(value = "/v1/cities/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getCity(@PathVariable("id")Integer id){
+        return positionService.findById(id);
     }
     @RequestMapping(value = "/v1/pois",method = RequestMethod.GET)
     @ResponseBody
-    public Object getPois(@RequestParam("type")String type,
+    public Object getPoiByCityAndKeyword(@RequestParam(value = "type",defaultValue = "search")String type,
                        @RequestParam("city_id")Integer cityId,
                        @RequestParam("keyword")String keyword){
 
         Map map =   positionService.findById(cityId);
         return positionService.searchPlace(map.get("name").toString(),keyword);
     }
-
+    //todo 未完成
+    @RequestMapping(value = "/v2/pois/{geoHash}",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getPoiByGeoHash(@PathVariable("geoHash")String geoHash){
+        return Rets.failure();
+    }
 }

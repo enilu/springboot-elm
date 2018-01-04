@@ -5,8 +5,6 @@ import cn.enilu.elm.api.utils.AppConfiguration;
 import cn.enilu.elm.api.utils.HttpClients;
 import cn.enilu.elm.api.vo.CityInfo;
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.nutz.json.Json;
@@ -88,12 +86,8 @@ public class PositionService {
         try {
             String str = HttpClients.get(appConfiguration.getApiQqSearchPlace(), params);
             Map result = (Map) Json.fromJson(str);
-
             if (Integer.valueOf(result.get("status").toString()).intValue() == 0) {
-               JsonArray jsonArray = (JsonArray) result.get("data");
-                List list =  new Gson().getAdapter(List.class).fromJson(new Gson().toJson(jsonArray));
-
-                return list;
+               return (List) result.get("data");
             }
         }catch (Exception e){
             throw  new RuntimeException(e.getMessage());
