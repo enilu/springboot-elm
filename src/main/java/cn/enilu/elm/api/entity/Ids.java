@@ -16,6 +16,7 @@ public class Ids implements BaseEntity {
     public static  final String FOOD_ID="food_id";
     public static  final String SKU_ID="sku_id";
     public static  final String CATEGORY_ID="category_id";
+    public static  final String CART_ID = "cart_id";
     @Id
     private String _id;
     private Long restaurant_id;

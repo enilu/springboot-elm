@@ -15,7 +15,6 @@ import java.util.Map;
  * @author zt
  */
 @RestController
-@RequestMapping
 public class RatingController extends BaseController {
     @Autowired
     private BaseDao baseDao;

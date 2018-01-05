@@ -41,7 +41,7 @@ public class BaseDao {
     }
 
     public void update(BaseEntity entity){
-
+        mongoTemplate.save(entity);
     }
     public WriteResult update(Long id, String collectionName, Map<String, Object> keyValues) {
         Update update = null;

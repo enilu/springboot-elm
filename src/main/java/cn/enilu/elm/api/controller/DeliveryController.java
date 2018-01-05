@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
  * @author zt
  */
 @RestController
-@RequestMapping
 public class DeliveryController extends BaseController {
     @Autowired
     private BaseDao baseDao;

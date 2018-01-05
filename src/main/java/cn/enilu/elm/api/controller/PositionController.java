@@ -17,7 +17,6 @@ import java.util.Map;
  * @author zt
  */
 @RestController
-@RequestMapping
 public class PositionController extends BaseController {
     @Autowired
     private BaseDao baseDao;

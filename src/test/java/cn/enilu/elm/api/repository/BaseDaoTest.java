@@ -1,13 +1,13 @@
 package cn.enilu.elm.api.repository;
 
 import cn.enilu.elm.api.ApiJunitTest;
+import cn.enilu.elm.api.entity.Address;
 import com.google.gson.Gson;
-import com.mongodb.WriteResult;
-import org.assertj.core.util.Maps;
 import org.junit.Test;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,10 +55,9 @@ public class BaseDaoTest extends ApiJunitTest {
 
     @Test
     public void update() throws Exception {
-        Map map = Maps.newHashMap("avatar","hahad.jpg");
-        map.put("city","北京");
-        WriteResult result = baseDao.update(1L, "admins",map);
-        System.out.println(result.toString());
+        Address address = baseDao.findOne(Address.class,"user_id",1L);
+        address.setCreated_at(new Date());
+        baseDao.update(address);
     }
 
     @Test

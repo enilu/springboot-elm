@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
  * @author zt
  */
 @RestController
-@RequestMapping
 public class RestaurantController extends BaseController {
     @RequestMapping(value = "/v4/restaurants",method = RequestMethod.GET)
 

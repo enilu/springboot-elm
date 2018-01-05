@@ -20,7 +20,6 @@ import java.nio.file.Paths;
  *
  * @author zt
  */
-@RequestMapping
 @Controller
 public class FileController extends BaseController {
     private static final Logger log = LoggerFactory.getLogger(FileController.class);
