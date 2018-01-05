@@ -71,8 +71,8 @@
 ## 在线文档：
 使用swagger2生成在线文档：
 ![在线文档](apidoc.jpg)
-## 技术栈
 
+## 技术栈
 Spring Boot + Mongodb
 
 ## 项目运行
