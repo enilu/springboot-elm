@@ -84,5 +84,4 @@ Spring Boot + Mongodb
 	baseUrl = 'http://localhost:8001';
     baseImgPath = 'http://localhost:8001/img/';
     将端口更改为8011即可
-```
-- 启动vue2-manage项目，具体启动方式参考[vue2-manage](https://github.com/bailicangdu/vue2-manage)文档
+``
