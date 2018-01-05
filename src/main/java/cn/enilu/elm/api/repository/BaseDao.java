@@ -36,7 +36,7 @@ public class BaseDao {
     public void delete(Long id, String collectionName) {
         mongoTemplate.remove(Query.query(Criteria.where("id").is(id)), collectionName);
     }
-    public void delete(Map<String,Object> keyValues,String collectionName){
+    public void delete(String collectionName,Map<String,Object> keyValues){
         mongoTemplate.remove(Query.query(criteria(keyValues)),collectionName);
     }
 

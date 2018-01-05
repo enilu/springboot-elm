@@ -18,12 +18,12 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/error")
-public class SimpleErrorController implements ErrorController {
+public class BaseErrorController implements ErrorController {
 
     private final ErrorAttributes errorAttributes;
 
     @Autowired
-    public SimpleErrorController(ErrorAttributes errorAttributes) {
+    public BaseErrorController(ErrorAttributes errorAttributes) {
         Assert.notNull(errorAttributes, "ErrorAttributes must not be null");
         this.errorAttributes = errorAttributes;
     }

@@ -19,7 +19,7 @@ public class Rets {
     public static Map<String,Object> success(String message){
         Map<String,Object> result = Maps.newHashMap();
         result.put("status",STATUS_SUCCESS);
-        result.put("message",message);
+        result.put("success",message);
         return result;
     }
     public static Map<String,Object> success(String key,Object data){

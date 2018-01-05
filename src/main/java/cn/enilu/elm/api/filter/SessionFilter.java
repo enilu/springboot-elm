@@ -2,7 +2,8 @@ package cn.enilu.elm.api.filter;
 
 import cn.enilu.elm.api.vo.Constants;
 import cn.enilu.elm.api.vo.Rets;
-import com.google.gson.Gson;
+
+import org.nutz.json.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +64,7 @@ public class SessionFilter implements Filter {
             } else {
                 // session不存在 准备跳转失败
                 PrintWriter out = response.getWriter();
-                out.println(new Gson().toJson(Rets.failure("message","未登录")));
+                out.println(Json.toJson(Rets.failure("message", "未登录")));
 
             }
 

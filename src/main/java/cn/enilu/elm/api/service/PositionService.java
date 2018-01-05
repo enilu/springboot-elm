@@ -5,9 +5,8 @@ import cn.enilu.elm.api.utils.AppConfiguration;
 import cn.enilu.elm.api.utils.HttpClients;
 import cn.enilu.elm.api.vo.CityInfo;
 import com.google.common.collect.Maps;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.nutz.json.Json;
+import org.nutz.mapl.Mapl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,37 +34,38 @@ public class PositionService {
         Map<String, String> map = Maps.newHashMap();
         map.put("ip", ip);
         map.put("key", appConfiguration.getTencentKey());
-        JsonObject result = null;
+        Map result = null;
         try {
             String str = HttpClients.get(appConfiguration.getApiQqGetLocation(), map);
-            result = new JsonParser().parse(str).getAsJsonObject();
+            result = (Map) Json.fromJson(str);// new JsonParser().parse(str).getAsJsonObject();
         } catch (Exception e) {
             logger.error("获取地理位置异常",e);
         }
-        if (result == null || result.get("status").getAsInt() != 0) {
+        if (result == null || Integer.valueOf(result.get("status").toString()) != 0) {
             try {
                 map.put("key", appConfiguration.getTencentKey2());
                 String str = HttpClients.get(appConfiguration.getApiQqGetLocation(), map);
-                result = new JsonParser().parse(str).getAsJsonObject();
+                result = (Map) Json.fromJson(str);
             } catch (Exception e) {
                 logger.error("获取地理位置异常",e);
             }
         }
-        if (result == null || result.get("status").getAsInt() != 0) {
+        if (result == null || Integer.valueOf(result.get("status").toString()) != 0) {
             try {
                 map.put("key", appConfiguration.getTencentKey3());
                 String str = HttpClients.get(appConfiguration.getApiQqGetLocation(), map);
-                result = new JsonParser().parse(str).getAsJsonObject();
+                result = (Map) Json.fromJson(str);
             } catch (Exception e) {
                 logger.error("获取地理位置异常",e);
             }
 
         }
-        if(result.get("status").getAsInt() == 0){
-            JsonObject jsonObject = result.getAsJsonObject("result");
-            String lat = jsonObject.getAsJsonObject("location").get("lat").getAsString();
-            String lng = jsonObject.getAsJsonObject("location").get("lng").getAsString();
-            String city = jsonObject.getAsJsonObject("ad_info").get("city").getAsString();
+        if ( Integer.valueOf(result.get("status").toString()) == 0) {
+            Map resultData = (Map) result.get("result");
+
+            String lat = String.valueOf(Mapl.cell(resultData,"location.lat"));
+            String lng = String.valueOf( Mapl.cell(resultData,"location.lng"));
+            String city = (String) Mapl.cell(resultData,"ad_info.city");
             city = city.replace("市","");
             CityInfo cityInfo = new CityInfo();
             cityInfo.setCity(city);

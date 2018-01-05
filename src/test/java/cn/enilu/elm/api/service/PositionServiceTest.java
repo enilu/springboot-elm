@@ -3,8 +3,8 @@ package cn.enilu.elm.api.service;
 
 import cn.enilu.elm.api.ApiJunitTest;
 import cn.enilu.elm.api.vo.CityInfo;
-import com.google.gson.Gson;
 import org.junit.Test;
+import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -18,11 +18,11 @@ public class PositionServiceTest extends ApiJunitTest {
     @Test
     public void getPostion() throws Exception {
         CityInfo cityInfo = positionService.getPostion("101.81.121.39");
-        System.out.println(new Gson().toJson(cityInfo));
+        System.out.println(Json.toJson(cityInfo));
     }
     @Test
     public void searchPlace()throws  Exception{
         Object obj  = positionService.searchPlace("上海","文通大厦");
-        System.out.println(new Gson().toJson(obj));
+        System.out.println(Json.toJson(obj));
     }
 }

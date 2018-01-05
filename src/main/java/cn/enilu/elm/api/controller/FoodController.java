@@ -9,7 +9,6 @@ import cn.enilu.elm.api.service.IdsService;
 import cn.enilu.elm.api.utils.Maps;
 import cn.enilu.elm.api.vo.Rets;
 import com.google.common.base.Strings;
-import com.google.gson.Gson;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -74,16 +73,14 @@ public class FoodController extends BaseController {
     @RequestMapping(value = "/v2/food/{id}",method = RequestMethod.DELETE)
 
     public Object delete(@PathVariable("id") Long id) {
-         baseDao.delete(Maps.newHashMap("item_id",id),"foods");
+         baseDao.delete("foods",Maps.newHashMap("item_id",id));
         return Rets.success();
     }
     //todo 未完成
     @RequestMapping(value = "/v2/updatefood",method = RequestMethod.POST)
-
     public Object update(HttpServletRequest request){
         Map<String,Object> data = getRequestPayload(Map.class);
-        System.out.println(new Gson().toJson(data));
-//        baseDao.update(Long.valueOf())
+        System.out.println(Json.toJson(data));
         return Rets.success();
     }
 

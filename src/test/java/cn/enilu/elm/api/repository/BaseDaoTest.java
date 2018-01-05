@@ -2,7 +2,6 @@ package cn.enilu.elm.api.repository;
 
 import cn.enilu.elm.api.ApiJunitTest;
 import cn.enilu.elm.api.entity.Address;
-import com.google.gson.Gson;
 import org.junit.Test;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class BaseDaoTest extends ApiJunitTest {
     @Test
     public void find() throws Exception {
         Map map = (Map) baseDao.findOne(1L,"admins");
-        System.out.println(new Gson().toJson(map));
+        System.out.println(Json.toJson(map));
     }
 
     @Test
@@ -41,7 +40,7 @@ public class BaseDaoTest extends ApiJunitTest {
     @Test
     public void near() throws  Exception{
         Object obj = baseDao.near(125.51181,11.26169,"shops");
-        System.out.println(new Gson().toJson(obj));
+        System.out.println(Json.toJson(obj));
     }
     @Test
     public void count() throws Exception {
@@ -63,6 +62,6 @@ public class BaseDaoTest extends ApiJunitTest {
     @Test
     public void queryAll1() throws Exception {
         List list = baseDao.findAll("users");
-        System.out.println(new Gson().toJson(list));
+        System.out.println(Json.toJson(list));
     }
 }
