@@ -16,6 +16,12 @@ public class Rets {
         result.put("status",STATUS_SUCCESS);
         return result;
     }
+    public static Map<String,Object> success(String message){
+        Map<String,Object> result = Maps.newHashMap();
+        result.put("status",STATUS_SUCCESS);
+        result.put("message",message);
+        return result;
+    }
     public static Map<String,Object> success(String key,Object data){
         Map<String,Object> result = Maps.newHashMap();
         result.put("status",STATUS_SUCCESS);
@@ -31,6 +37,16 @@ public class Rets {
         Map<String,Object> result = Maps.newHashMap();
         result.put("status",STATUS_FAILURE);
         result.put(key,data);
+        return result;
+    }
+    public static  Map<String,Object> failure(Map<String,Object> data){
+        data.put("status",STATUS_FAILURE);
+        return data;
+    }
+    public static Map<String,Object> failure(String message){
+        Map<String,Object> result = Maps.newHashMap();
+        result.put("status",STATUS_FAILURE);
+        result.put("message",message);
         return result;
     }
 

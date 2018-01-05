@@ -51,13 +51,13 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @ResponseBody
     public Object login(HttpServletRequest request) {
-        Admin admins= getRequestPayload(request,Admin.class);
+        Admin admins= getRequestPayload(Admin.class);
         Admin result = baseDao.findOne(Admin.class,"user_name",admins.getUser_name());
         String password = admins.getPassword();
         String newPwd = MD5.getMD5String(getMD5String(password).substring(2,7)+ getMD5String(password));
         if(result!=null){
             if(newPwd.equals(result.getPassword())) {
-                setSession(request, Constants.SESSION_ID,admins);
+                setSession( Constants.SESSION_ID,admins);
                 return Rets.success("success", "登录成功");
 
             }else{
@@ -68,13 +68,13 @@ public class AdminController extends BaseController {
             admins.setStatus(1);
             admins.setAvatar("default.jpg");
             admins.setAdmin("管理员");
-            String ip = getIp(request);
+            String ip = getIp();
             CityInfo cityInfo = positionService.getPostion(ip);
             admins.setCity(cityInfo!=null?cityInfo.getCity():null);
             admins.setId(idsService.getId(Ids.ADMIN_ID));
             admins.setPassword(newPwd);
             baseDao.save(admins);
-            setSession(request,Constants.SESSION_ID,admins);
+            setSession(Constants.SESSION_ID,admins);
             return Rets.success("success", "登录成功");
         }
 

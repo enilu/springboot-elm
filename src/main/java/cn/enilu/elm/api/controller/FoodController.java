@@ -38,7 +38,7 @@ public class FoodController extends BaseController {
     @RequestMapping(value = "addfood",method = RequestMethod.GET)
 
     public Object add(HttpServletRequest request) {
-        String json = getRequestPayload(request);
+        String json = getRequestPayload();
         Food food = Json.fromJson(Food.class, json);
         food.setItem_id(idsService.getId(Ids.ITEM_ID));
         List<SpecFood> specFoods = new ArrayList<SpecFood>(2);
@@ -81,7 +81,7 @@ public class FoodController extends BaseController {
     @RequestMapping(value = "/v2/updatefood",method = RequestMethod.POST)
 
     public Object update(HttpServletRequest request){
-        Map<String,Object> data = getRequestPayload(request,Map.class);
+        Map<String,Object> data = getRequestPayload(Map.class);
         System.out.println(new Gson().toJson(data));
 //        baseDao.update(Long.valueOf())
         return Rets.success();

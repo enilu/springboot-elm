@@ -77,7 +77,7 @@ public class ShopController extends BaseController {
     @RequestMapping(value = "/updateshop",method = RequestMethod.POST)
 
     public Object updateShop(HttpServletRequest request) {
-        Map data =   getRequestPayload(request, Map.class);
+        Map data =   getRequestPayload( Map.class);
         Map<String, Object> updateMap = new HashMap<String, Object>(16);
         updateMap.put("name", Strings.sNull(data.get("name")));
         updateMap.put("address", Strings.sNull(data.get("address")));
@@ -94,7 +94,7 @@ public class ShopController extends BaseController {
     @RequestMapping(value = "/addShop",method = RequestMethod.POST)
 
     public Object addShop(HttpServletRequest request) {
-        String json = getRequestPayload(request);
+        String json = getRequestPayload();
         Map data = (Map) Json.fromJson(json);
         Shop shop = Json.fromJson(Shop.class, json);
         shop.setId(idsService.getId(Ids.RESTAURANT_ID));
@@ -178,7 +178,7 @@ public class ShopController extends BaseController {
         }
         shop.setActivities(activities);
 
-        CityInfo cityInfo = positionService.getPostion(getIp(request));
+        CityInfo cityInfo = positionService.getPostion(getIp());
         if (cityInfo != null) {
             shop.setLatitude(Double.valueOf(cityInfo.getLat()));
             shop.setLongitude(Double.valueOf(cityInfo.getLng()));
@@ -195,7 +195,7 @@ public class ShopController extends BaseController {
     @RequestMapping(value = "addcategory",method = RequestMethod.POST)
 
     public Object addCategory(HttpServletRequest request) {
-        Menu menu = getRequestPayload(request, Menu.class);
+        Menu menu = getRequestPayload( Menu.class);
         menu.setId(idsService.getId(Ids.CATEGORY_ID));
         System.out.println(Json.toJson(menu));
         //todo 进行处理后保存

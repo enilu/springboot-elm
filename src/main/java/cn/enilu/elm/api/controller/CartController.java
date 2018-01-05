@@ -25,7 +25,7 @@ public class CartController extends BaseController {
     private IdsService idsService;
     @RequestMapping(value = "/v1/carts/checkout",method = RequestMethod.POST)
     public Object checkout(HttpServletRequest request){
-        Map data = getRequestPayload(request,Map.class);
+        Map data = getRequestPayload(Map.class);
         data.put("id",idsService.getId(Ids.CATEGORY_ID));
         baseDao.save(data,"carts");
         return  null;

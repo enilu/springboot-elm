@@ -30,7 +30,7 @@ public class PositionController extends BaseController {
         Map data = (Map) cities.get("data");
         switch (type){
             case "guess":
-                CityInfo cityInfo = positionService.getPostion(getIp(request));
+                CityInfo cityInfo = positionService.getPostion(getIp());
                 String city = cityInfo.getCity();
                 if (Strings.isNullOrEmpty(city)) {
                     return Rets.failure();

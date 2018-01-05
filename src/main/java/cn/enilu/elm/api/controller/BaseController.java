@@ -2,6 +2,9 @@ package cn.enilu.elm.api.controller;
 
 import com.google.common.base.Strings;
 import org.nutz.json.Json;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -14,9 +17,9 @@ import java.util.Map;
  */
 public class BaseController {
 
-    protected  String getRequestPayload(HttpServletRequest request){
+    protected  String getRequestPayload( ){
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = request.getReader();) {
+        try (BufferedReader reader = getRequest().getReader();) {
             char[] buff = new char[1024];
             int len;
             while ((len = reader.read(buff)) != -1) {
@@ -27,8 +30,8 @@ public class BaseController {
         }
         return sb.toString();
     }
-    protected  <T>T getRequestPayload(HttpServletRequest request, Class<T> klass)     {
-        String json = getRequestPayload(request);
+    protected  <T>T getRequestPayload(  Class<T> klass)     {
+        String json = getRequestPayload();
         try {
             T result = null;
             if(klass==Map.class||klass==null){
@@ -42,13 +45,20 @@ public class BaseController {
         }
         return null;
     }
-
-    protected  void setSession(HttpServletRequest request,String key,Object val){
-        request.getSession().setAttribute(key,val);
+    protected HttpServletRequest getRequest(){
+        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+        return sra.getRequest();
+    }
+    protected Object getSession(String key){
+        return getRequest().getSession().getAttribute(key);
+    }
+    protected  void setSession(  String key,Object val){
+        getRequest().getSession().setAttribute(key,val);
     }
 
-    public String getIp(HttpServletRequest request){
-        String ip = request.getHeader("x-forwarded-for");
+    public String getIp(){
+        String ip = getRequest().getHeader("x-forwarded-for");
         if(Strings.isNullOrEmpty(ip)){
             //测试ip
             ip = "101.81.121.39";
