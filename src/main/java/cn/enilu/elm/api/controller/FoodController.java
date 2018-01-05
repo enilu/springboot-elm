@@ -12,7 +12,6 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ import java.util.Map;
  *
  * @author zt
  */
-@Controller
+@RestController
 @RequestMapping("/shopping")
 public class FoodController extends BaseController {
 
@@ -37,7 +36,7 @@ public class FoodController extends BaseController {
     private IdsService idsService;
 
     @RequestMapping(value = "addfood",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object add(HttpServletRequest request) {
         String json = getRequestPayload(request);
         Food food = Json.fromJson(Food.class, json);
@@ -53,7 +52,7 @@ public class FoodController extends BaseController {
         return Rets.success();
     }
     @RequestMapping(value="/v2/foods",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object list(@RequestParam("restaurant_id") String restaurantId,
                        @RequestParam(value = "offset", defaultValue = "0") Integer offset,
                        @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
@@ -67,20 +66,20 @@ public class FoodController extends BaseController {
     }
 
     @RequestMapping(value = "/v2/foods/count",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object count() {
         long count = baseDao.count("foods");
         return Rets.success("count", count);
     }
     @RequestMapping(value = "/v2/food/{id}",method = RequestMethod.DELETE)
-    @ResponseBody
+
     public Object delete(@PathVariable("id") Long id) {
          baseDao.delete(Maps.newHashMap("item_id",id),"foods");
         return Rets.success();
     }
     //todo 未完成
     @RequestMapping(value = "/v2/updatefood",method = RequestMethod.POST)
-    @ResponseBody
+
     public Object update(HttpServletRequest request){
         Map<String,Object> data = getRequestPayload(request,Map.class);
         System.out.println(new Gson().toJson(data));

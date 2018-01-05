@@ -16,7 +16,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +33,7 @@ import static cn.enilu.elm.api.utils.MD5.getMD5String;
  * @author zt
  */
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(AdminController.class);

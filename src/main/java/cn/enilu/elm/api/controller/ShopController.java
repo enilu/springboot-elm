@@ -15,7 +15,6 @@ import org.nutz.lang.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ import java.util.*;
  *
  * @author zt
  */
-@Controller
+@RestController
 @RequestMapping("/shopping")
 public class ShopController extends BaseController {
     @Autowired
@@ -36,14 +35,14 @@ public class ShopController extends BaseController {
     @Autowired
     private PositionService positionService;
     @RequestMapping(value = "/restaurant/{id}",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object getShop(@PathVariable("id")Long id) {
         Object data = baseDao.findOne(id,"shops");
         return data ;
     }
 
     @RequestMapping(value = "restaurants",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object listShop(@RequestParam("latitude") String latitude, @RequestParam("longitude") String longitude,
                        @RequestParam( "offset") Integer offset,
                        @RequestParam("limit") Integer limit) {
@@ -63,20 +62,20 @@ public class ShopController extends BaseController {
     }
 
     @RequestMapping(value = "/restaurants/count",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object countShop() {
         long count = baseDao.count(Shop.class);
         return Rets.success("count", count);
     }
     @RequestMapping(value = "/restaurants/{id}",method = RequestMethod.DELETE)
-    @ResponseBody
+
     public Object deleteShop(@PathVariable("id")Long id) {
         baseDao.delete(id,"shops");
         return Rets.success();
     }
 
     @RequestMapping(value = "/updateshop",method = RequestMethod.POST)
-    @ResponseBody
+
     public Object updateShop(HttpServletRequest request) {
         Map data =   getRequestPayload(request, Map.class);
         Map<String, Object> updateMap = new HashMap<String, Object>(16);
@@ -93,7 +92,7 @@ public class ShopController extends BaseController {
     }
 
     @RequestMapping(value = "/addShop",method = RequestMethod.POST)
-    @ResponseBody
+
     public Object addShop(HttpServletRequest request) {
         String json = getRequestPayload(request);
         Map data = (Map) Json.fromJson(json);
@@ -194,7 +193,7 @@ public class ShopController extends BaseController {
     }
 
     @RequestMapping(value = "addcategory",method = RequestMethod.POST)
-    @ResponseBody
+
     public Object addCategory(HttpServletRequest request) {
         Menu menu = getRequestPayload(request, Menu.class);
         menu.setId(idsService.getId(Ids.CATEGORY_ID));
@@ -204,13 +203,13 @@ public class ShopController extends BaseController {
         return Rets.success();
     }
     @RequestMapping(value = "/v2/restaurant/category",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object categories() {
         return baseDao.findAll("categories");
     }
 
     @RequestMapping(value = "/getcategory/{id}",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object getCategory(@PathVariable("id") Long restaurantId) {
         List list = baseDao.findAll("menus", "restaurant_id", restaurantId);
         return Rets.success("category_list", list);
@@ -218,12 +217,12 @@ public class ShopController extends BaseController {
 
 
     @RequestMapping(value = "/v2/menu{id}",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object getMenus(@PathVariable("id")Long id){
         return baseDao.findOne(id,"menus");
     }
     @RequestMapping(value = "/v2/menu",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object getMenu(@RequestParam("restaurant_id")Long restaurantId, @RequestParam("allMenu")boolean allMEnu){
         return baseDao.findAll("menus","restaurant_id",restaurantId);
     }

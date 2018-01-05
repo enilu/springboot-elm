@@ -6,7 +6,6 @@ import cn.enilu.elm.api.vo.CityInfo;
 import cn.enilu.elm.api.vo.Rets;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ import java.util.Map;
  *
  * @author zt
  */
-@Controller
+@RestController
 @RequestMapping
 public class PositionController extends BaseController {
     @Autowired
@@ -26,7 +25,7 @@ public class PositionController extends BaseController {
     private PositionService positionService;
 
     @RequestMapping(value = "/v1/cities",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object cities(@RequestParam("type") String type, HttpServletRequest request) {
         Map cities = baseDao.findOne("cities");
         Map data = (Map) cities.get("data");
@@ -56,12 +55,12 @@ public class PositionController extends BaseController {
 
     }
     @RequestMapping(value = "/v1/cities/{id}",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object getCity(@PathVariable("id")Integer id){
         return positionService.findById(id);
     }
     @RequestMapping(value = "/v1/pois",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object getPoiByCityAndKeyword(@RequestParam(value = "type",defaultValue = "search")String type,
                        @RequestParam("city_id")Integer cityId,
                        @RequestParam("keyword")String keyword){
@@ -71,7 +70,7 @@ public class PositionController extends BaseController {
     }
     //todo 未完成
     @RequestMapping(value = "/v2/pois/{geoHash}",method = RequestMethod.GET)
-    @ResponseBody
+
     public Object getPoiByGeoHash(@PathVariable("geoHash")String geoHash){
         return Rets.failure();
     }
