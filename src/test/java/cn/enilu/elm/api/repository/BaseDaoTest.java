@@ -2,6 +2,7 @@ package cn.enilu.elm.api.repository;
 
 import cn.enilu.elm.api.ApiJunitTest;
 import cn.enilu.elm.api.entity.Address;
+import cn.enilu.elm.api.entity.Order;
 import org.junit.Test;
 import org.nutz.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class BaseDaoTest extends ApiJunitTest {
 
     @Test
     public void queryAll1() throws Exception {
-        List list = baseDao.findAll("users");
+        List list = baseDao.findAll(Order.class);
         System.out.println(Json.toJson(list));
     }
 }

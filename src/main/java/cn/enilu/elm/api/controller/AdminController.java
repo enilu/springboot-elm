@@ -13,12 +13,14 @@ import cn.enilu.elm.api.vo.Rets;
 import com.google.common.collect.Maps;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.nutz.json.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -57,6 +59,9 @@ public class AdminController extends BaseController {
         String newPwd = MD5.getMD5String(getMD5String(password).substring(2,7)+ getMD5String(password));
         if(result!=null){
             if(newPwd.equals(result.getPassword())) {
+
+                Cookie[] cookies = request.getCookies();
+                logger.info("cookies:{}", Json.toJson(cookies));
                 setSession( Constants.SESSION_ID,admins);
                 return Rets.success("success", "登录成功");
 

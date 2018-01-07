@@ -51,7 +51,6 @@ public class FoodController extends BaseController {
         return Rets.success();
     }
     @RequestMapping(value="/v2/foods",method = RequestMethod.GET)
-
     public Object list(@RequestParam("restaurant_id") String restaurantId,
                        @RequestParam(value = "offset", defaultValue = "0") Integer offset,
                        @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
@@ -59,7 +58,6 @@ public class FoodController extends BaseController {
         if (Strings.isNullOrEmpty(restaurantId) || "undefined".equals(restaurantId)) {
             return baseDao.findAll(Food.class);
         } else {
-            //todo 查询指定餐厅下的食品列表
             return baseDao.findAll(Food.class,"restaurant_id",Long.valueOf(restaurantId));
         }
     }

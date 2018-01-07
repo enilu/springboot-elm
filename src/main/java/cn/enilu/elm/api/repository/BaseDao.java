@@ -116,21 +116,40 @@ public class BaseDao {
     }
 
     public long count(Class klass) {
-        return mongoTemplate.count(null, klass);
+        return count( klass,null);
+    }
+    public long count(Class klass,Map<String,Object> params) {
+        Criteria criteria = criteria(params);
+        if(criteria==null){
+         return mongoTemplate.count(null,klass);
+        }else {
+            return mongoTemplate.count(Query.query(criteria), klass);
+        }
     }
 
     public long count(String collection) {
         return mongoTemplate.count(null, collection);
     }
+    public long count(String collection,Map<String,Object> params) {
+        Criteria criteria = criteria(params);
+        if(criteria==null){
+            return mongoTemplate.count(null,collection);
+        }else {
+            return mongoTemplate.count(Query.query(criteria), collection);
+        }
+    }
+
 
 
     private Criteria criteria(Map<String, Object> map) {
         Criteria criteria = null;
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            if (criteria == null) {
-                criteria = Criteria.where(entry.getKey()).is(entry.getValue());
-            } else {
-                criteria.and(entry.getKey()).is(entry.getValue());
+        if(map!=null) {
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                if (criteria == null) {
+                    criteria = Criteria.where(entry.getKey()).is(entry.getValue());
+                } else {
+                    criteria.and(entry.getKey()).is(entry.getValue());
+                }
             }
         }
         return criteria;

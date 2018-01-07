@@ -1,5 +1,7 @@
 package cn.enilu.elm.api.entity.sub;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
 /**
@@ -8,12 +10,27 @@ import java.util.List;
  * @author zt
  */
 public class OrderGroup {
-    private List attrs;
-    private List new_specs;
+    @Id
+    private String _id;
     private String name;
     private Double price;
     private Double quantity;
-    private String specs;
+
+    private List specs;
+    private List attrs;
+    private List new_specs;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public void setSpecs(List specs) {
+        this.specs = specs;
+    }
 
     public List getAttrs() {
         return attrs;
@@ -55,11 +72,4 @@ public class OrderGroup {
         this.quantity = quantity;
     }
 
-    public String getSpecs() {
-        return specs;
-    }
-
-    public void setSpecs(String specs) {
-        this.specs = specs;
-    }
 }
